@@ -13,7 +13,9 @@
   "author": "malbernaz <albernazmiguel@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "eslint": "^4.2.0",
+    "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-react": "^7.1.0",
     "if-env": "^1.0.0",
     "node-sass": "^4.5.3",
@@ -21,9 +23,12 @@
     "sass-loader": "^6.0.6"
   },
   "dependencies": {
+    "history": "^4.6.3",
     "preact": "^8.2.0",
     "preact-compat": "^3.16.0",
-    "preact-router": "^2.5.4"
+    "preact-router": "^2.5.4",
+    "preact-transition-group": "^1.1.1",
+    "universal-router": "^3.2.0"
   },
   "repository": "https://github.com/malbernaz/dribbble-shots.git"
 }

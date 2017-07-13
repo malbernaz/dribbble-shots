@@ -1,0 +1,36 @@
+.root {
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
+  will-change: opacity;
+}
+
+.root:global(.transition-enter) {
+  animation: enter .4s ease-in;
+  animation-delay: .2s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+.root:global(.transition-leave) {
+  animation: leave .2s ease-in;
+  animation-fill-mode: forwards;
+}
+
+@keyframes enter {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes leave {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

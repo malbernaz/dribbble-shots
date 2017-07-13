@@ -1,0 +1,21 @@
+.root {
+  max-width: 1000px;
+  width: auto;
+  margin: 0 auto;
+  padding: 1em;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.gridItem {
+  width: calc(calc(100% / 4) - calc(6rem / 4));
+  margin-bottom: 2rem;
+}
+
+.gridItem:nth-child(3n) {
+  margin-left: 0;
+}

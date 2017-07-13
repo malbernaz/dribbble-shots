@@ -1,0 +1,23 @@
+@import "../../style/vars";
+
+.root {
+  color: $primary-color;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  height: 5em;
+  fill: $primary-color;
+  margin-right: 1rem;
+}
+
+.title {
+  margin: 0;
+  height: 0;
+  width: 0;
+  pointer-events: none;
+  opacity: 0;
+}

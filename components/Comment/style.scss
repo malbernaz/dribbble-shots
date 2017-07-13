@@ -1,0 +1,21 @@
+@import "../../style/vars";
+
+.root {
+  display: flex;
+  // align-items: center;
+  padding: 1em 0;
+  border-top: 1px solid lighten($text-color, 40%);
+}
+
+.avatar {
+  margin-right: 1em;
+}
+
+.content h3,
+.content p {
+  margin: 0 0 .5em;
+}
+
+.info {
+  color: #aaa;
+}

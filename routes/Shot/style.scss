@@ -1,0 +1,99 @@
+@import "../../style/vars";
+
+.root {
+  max-width: 1000px;
+  width: auto;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 2em 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.headerLeft,
+.headerRight {
+  display: flex;
+  align-items: center;
+}
+
+.likesCount {
+  font-weight: bold;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+}
+
+.like {
+  fill: $primary-color;
+  height: 20px;
+  margin-right: .5em;
+}
+
+.headerInfo {
+  margin-left: 1em;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.headerInfo h1 {
+  font-size: 20px;
+  margin: 0 0 .3em;
+}
+
+.headerInfo p {
+  margin: 0;
+}
+
+.body {
+  padding: 1em;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.shot {
+  padding: 1em;
+  background: #efefef;
+  position: relative;
+}
+
+.shot::after {
+  content: "";
+  display: block;
+  width: 100%;
+  padding-top: 75%;
+}
+
+.shot img {
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  width: calc(100% - 2em);
+  height: calc(100% - 2em);
+}
+
+.description {
+  padding: 1em 0;
+}
+
+.comments {
+  min-height: 200px;
+  position: relative;
+}
+
+.commentsCount {
+  padding: 1em 0;
+  border-top: 1px solid lighten($text-color, 40%);
+  font-weight: bold;
+}
+
+.commentsCount p {
+  margin: 0;
+}
