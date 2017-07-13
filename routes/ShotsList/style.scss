@@ -1,3 +1,5 @@
+@import "../../style/vars";
+
 .root {
   max-width: 1000px;
   width: auto;
@@ -12,10 +14,51 @@
 }
 
 .gridItem {
+  margin-bottom: 2em;
   width: calc(calc(100% / 4) - calc(6rem / 4));
-  margin-bottom: 2rem;
 }
 
-.gridItem:nth-child(3n) {
-  margin-left: 0;
+@media (max-width: 800px) {
+  .gridItem {
+    width: calc(calc(100% / 3) - calc(4em / 3));
+  }
+}
+
+@media (max-width: 620px) {
+  .gridItem {
+    width: calc(calc(100% / 2) - calc(2em / 2));
+  }
+}
+
+@media (max-width: 425px) {
+  .gridItem {
+    width: 100%;
+  }
+}
+
+.loadmore {
+  appearance: none;
+  border: none;
+  padding: 0 2em;
+  font-size: 1em;
+  text-transform: uppercase;
+  border-radius: 50px;
+  display: block;
+  margin: .5em auto 1.5em;
+  background: $primary-color;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  position: relative;
+  outline: none;
+}
+
+.loadmore div {
+  border-color: #ffffff;
+  border-bottom-color: transparent;
+  height: 15px;
+  width: 15px;
 }

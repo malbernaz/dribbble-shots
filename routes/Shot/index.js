@@ -11,45 +11,65 @@ import Like from "../../components/Like";
 
 import s from "./style.scss";
 
-const mapToProps = ({ shots }, { id }) => ({ shot: shots[id] });
+const mapToProps = ({ shots }, { id }) => ({
+  shot: shots.filter(s => s.id == id)[0]
+});
 
 @connect(mapToProps)
 export default class Shot extends Component {
+  state = { imgSrc: null };
+
   componentDidMount() {
     if (this.props.shot && !this.props.shot.comments) {
       fetchComments(this.props.shot.id);
     }
+
+    if (this.props.shot && this.props.shot.images.hidpi) {
+      this.loadImg();
+    }
   }
 
-  render({ shot }) {
-    return shot
-      ? <div class={s.root} id="animated">
-          <header class={s.header}>
-            <div class={s.headerLeft}>
-              <Avatar src={shot.user.avatar_url} name={shot.user.name} />
-              <div class={s.headerInfo}>
-                <h1>
-                  {shot.title}
-                </h1>
-                <p>
-                  by {shot.user.name} on {formatDate(shot.created_at)}
-                </p>
-              </div>
+  loadImg = () => {
+    const img = new Image();
+
+    img.onload = ({ target }) => {
+      this.setState({ imgSrc: target.src });
+    };
+
+    const { shot } = this.props;
+
+    img.src = shot.images.hidpi || shot.images.normal;
+  };
+
+  render({ shot }, { imgSrc }) {
+    return (
+      <div class={s.root} id="animated">
+        <header class={s.header}>
+          <div class={s.headerLeft}>
+            <Avatar src={shot.user.avatar_url} name={shot.user.name} />
+            <div class={s.headerInfo}>
+              <h1>
+                {shot.title}
+              </h1>
+              <p>
+                by {shot.user.name} on {formatDate(shot.created_at)}
+              </p>
             </div>
-            <div class={s.headerRight}>
-              <div class={s.likesCount}>
-                <Like class={s.like} /> {shot.likes_count}
-              </div>
+          </div>
+          <div class={s.headerRight}>
+            <div class={s.likesCount}>
+              <Like class={s.like} /> {shot.likes_count}
             </div>
-          </header>
-          <div class={s.body}>
-            <div class={s.content}>
-              <div class={s.shot}>
-                <img src={shot.images.hidpi || shot.images.normal} alt={shot.title} />
-              </div>
-              <div class={s.description} dangerouslySetInnerHTML={{ __html: shot.description }} />
-              {shot.comments_count &&
-                <div class={s.comments}>
+          </div>
+        </header>
+        <div class={s.body}>
+          <div class={s.content}>
+            <div class={s.shot}>
+              <img src={imgSrc || shot.images.teaser} alt={shot.title} />
+            </div>
+            <div class={s.description} dangerouslySetInnerHTML={{ __html: shot.description }} />
+            {shot.comments_count
+              ? <div class={s.comments}>
                   <div class={s.commentsCount}>
                     <p>
                       {pluralize(shot.comments_count, " Comment")}
@@ -58,10 +78,11 @@ export default class Shot extends Component {
                   {shot.comments && shot.comments.length
                     ? shot.comments.map(c => <Comment key={c.id} comment={c} />)
                     : <Spinner />}
-                </div>}
-            </div>
+                </div>
+              : null}
           </div>
         </div>
-      : null;
+      </div>
+    );
   }
 }

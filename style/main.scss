@@ -18,6 +18,10 @@ a {
   color: $primary-color;
 }
 
+p {
+  word-break: break-all;
+}
+
 :global(.transition-container) {
   position: relative;
 }

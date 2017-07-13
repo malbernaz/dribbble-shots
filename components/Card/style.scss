@@ -132,3 +132,26 @@
   background-size: auto 10px;
   background-position: left center;
 }
+
+.modalShadow {
+  position: fixed;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .85);
+  overflow-y: scroll;
+}
+
+.modalContent {
+  margin: 3em auto;
+  will-change: scroll-position;
+  max-width: 700px;
+}
+
+@media (max-width: 700px) {
+  .modalContent {
+    margin: 0;
+  }
+}

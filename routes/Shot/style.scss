@@ -17,6 +17,23 @@
   margin: 0 auto;
 }
 
+@media (max-width: 450px) {
+  .header {
+    font-size: 12px;
+    flex-direction: column;
+  }
+
+  .headerLeft {
+    margin: 0 0 1em;
+    flex-direction: column;
+  }
+
+  .headerInfo.headerInfo {
+    margin: 1em 0 0;
+    align-items: center;
+  }
+}
+
 .headerLeft,
 .headerRight {
   display: flex;
@@ -77,6 +94,7 @@
   left: 1em;
   width: calc(100% - 2em);
   height: calc(100% - 2em);
+  background: attr(data-src);
 }
 
 .description {

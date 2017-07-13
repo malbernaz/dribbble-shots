@@ -23,12 +23,10 @@
     "sass-loader": "^6.0.6"
   },
   "dependencies": {
-    "history": "^4.6.3",
     "preact": "^8.2.0",
     "preact-compat": "^3.16.0",
-    "preact-router": "^2.5.4",
-    "preact-transition-group": "^1.1.1",
-    "universal-router": "^3.2.0"
+    "preact-portal": "^1.1.2",
+    "preact-router": "^2.5.4"
   },
   "repository": "https://github.com/malbernaz/dribbble-shots.git"
 }

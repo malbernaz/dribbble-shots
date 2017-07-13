@@ -7,33 +7,43 @@ import Spinner from "../../components/Spinner";
 
 import s from "./style.scss";
 
-const Item = ({ children }) =>
-  <div class={s.gridItem}>
-    {children}
-  </div>;
-
-const mapToProps = ({ shots }) => ({ shots: Object.keys(shots).map(s => shots[s]) });
+const mapToProps = ({ shots, loadingShots, page }) => ({
+  shots: Object.keys(shots).map(s => shots[s]),
+  page: parseInt(page, 10),
+  loadingShots
+});
 
 @connect(mapToProps)
 export default class ShotList extends Component {
   componentDidMount() {
     if (this.props.shots.length <= 1) {
-      fetchShots();
+      fetchShots(this.props.page || 1);
     }
   }
 
-  render({ shots }) {
+  loadmore = () => {
+    const { loadingShots, page } = this.props;
+    if (loadingShots) return;
+    fetchShots(page + 1);
+  };
+
+  render({ shots, loadingShots }) {
     return (
       <div class={s.root} id="animated">
-        <section class={s.grid}>
-          {shots.length > 1
-            ? shots.map(shot =>
-                <Item key={`card-${shot.id}`}>
+        {shots.length > 1
+          ? <div class={s.grid}>
+              {shots.map(shot =>
+                <div key={`griditem-${shot.id}`} class={s.gridItem}>
                   <Card shot={shot} />
-                </Item>
-              )
-            : <Spinner />}
-        </section>
+                </div>
+              )}
+            </div>
+          : <Spinner />}
+        {shots.length
+          ? <button class={s.loadmore} onClick={this.loadmore}>
+              {!loadingShots ? <span>load more</span> : <Spinner />}
+            </button>
+          : null}
       </div>
     );
   }
