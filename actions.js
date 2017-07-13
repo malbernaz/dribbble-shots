@@ -24,8 +24,13 @@ export function fetchShots(page) {
 }
 
 export function fetchShot(id) {
+  const { shots = [] } = store.getState();
+  const [shot] = shots.filter(s => s.id == id);
+  if (shot) {
+    return Promise.resolve(shots);
+  }
   return api.fetchShot(id).then(shot => {
-    store.setState({ shots: [shot] });
+    store.setState({ shots: [shot, ...shots] });
     return shot;
   });
 }

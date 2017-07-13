@@ -39,7 +39,7 @@ export default class ShotList extends Component {
               )}
             </div>
           : <Spinner />}
-        {shots.length
+        {shots.length > 1
           ? <button class={s.loadmore} onClick={this.loadmore}>
               {!loadingShots ? <span>load more</span> : <Spinner />}
             </button>

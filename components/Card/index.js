@@ -1,6 +1,8 @@
 import { Component } from "preact";
 import Portal from "preact-portal";
-import Shot from "../../routes/Shot";
+
+import Shot from "../Shot";
+import Arrow from "../Arrow";
 
 import { timeago } from "../../lib/util";
 
@@ -55,6 +57,11 @@ export default class Card extends Component {
           ? <Portal into="body">
               <div class={s.modalShadow} onClick={this.hideModal}>
                 <div class={s.modalContent}>
+                  <div class={s.modalHeader}>
+                    <a onClick={this.hideModal}>
+                      <Arrow class={s.closeBtn} />
+                    </a>
+                  </div>
                   <Shot id={shot.id} />
                 </div>
               </div>
