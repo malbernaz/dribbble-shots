@@ -14,11 +14,13 @@ export default class Card extends Component {
     e.stopPropagation();
     e.preventDefault();
     document.body.style.overflowY = "hidden";
+    history.pushState(null, null, `/shot/${this.props.shot.id}`);
     this.setState({ open: true });
   };
 
   hideModal = () => {
     document.body.style.overflowY = "";
+    history.pushState(null, null, "/");
     this.setState({ open: false });
   };
 
@@ -32,7 +34,10 @@ export default class Card extends Component {
               <h2>
                 {shot.title}
               </h2>
-              <div class={s.description} dangerouslySetInnerHTML={{ __html: shot.description }} />
+              <div
+                class={s.description}
+                dangerouslySetInnerHTML={{ __html: shot.description }}
+              />
             </div>
             <div class={s.bottom}>
               about {timeago(shot.created_at)} ago
@@ -56,7 +61,7 @@ export default class Card extends Component {
         {open
           ? <Portal into="body">
               <div class={s.modalShadow} onClick={this.hideModal}>
-                <div class={s.modalContent}>
+                <div class={s.modalContent} onClick={e => e.stopPropagation()}>
                   <div class={s.modalHeader}>
                     <a onClick={this.hideModal}>
                       <Arrow class={s.closeBtn} />

@@ -1,7 +1,7 @@
 import { Component } from "preact";
 
 import { connect } from "../../lib/unistore";
-import { formatDate, pluralize } from "../../lib/util";
+import { formatDate, pluralize, filter, map } from "../../lib/util";
 import { fetchComments } from "../../actions";
 
 import Avatar from "../../components/Avatar";
@@ -12,21 +12,20 @@ import Like from "../../components/Like";
 import s from "./style.scss";
 
 const mapToProps = ({ shots }, { id }) => ({
-  shot: shots.filter(s => s.id == id)[0]
+  shot: filter(shots, s => s.id == id)[0]
 });
 
 @connect(mapToProps)
 export default class Shot extends Component {
-  state = { imgSrc: null };
+  state = { imgSrc: null, hasError: false };
 
   componentDidMount() {
     if (this.props.shot && !this.props.shot.comments) {
-      fetchComments(this.props.shot.id);
+      fetchComments(this.props.shot.id).catch(() => {
+        this.setState({ hasError: true });
+      });
     }
-
-    if (this.props.shot && this.props.shot.images.hidpi) {
-      this.loadImg();
-    }
+    this.loadImg();
   }
 
   loadImg = () => {
@@ -41,7 +40,7 @@ export default class Shot extends Component {
     img.src = shot.images.hidpi || shot.images.normal;
   };
 
-  render({ shot }, { imgSrc }) {
+  render({ shot }, { imgSrc, hasError }) {
     return (
       <div class={s.root} id="animated">
         <header class={s.header}>
@@ -67,7 +66,10 @@ export default class Shot extends Component {
             <div class={s.shot}>
               <img src={imgSrc || shot.images.teaser} alt={shot.title} />
             </div>
-            <div class={s.description} dangerouslySetInnerHTML={{ __html: shot.description }} />
+            <div
+              class={s.description}
+              dangerouslySetInnerHTML={{ __html: shot.description }}
+            />
             {shot.comments_count
               ? <div class={s.comments}>
                   <div class={s.commentsCount}>
@@ -76,8 +78,14 @@ export default class Shot extends Component {
                     </p>
                   </div>
                   {shot.comments && shot.comments.length
-                    ? shot.comments.map(c => <Comment key={c.id} comment={c} />)
-                    : <Spinner />}
+                    ? map(shot.comments, c =>
+                        <Comment key={c.id} comment={c} />
+                      )
+                    : !hasError ? <Spinner /> : null}
+                  {hasError &&
+                    <span class={s.error}>
+                      something went wrong... could not load comments. : (
+                    </span>}
                 </div>
               : null}
           </div>

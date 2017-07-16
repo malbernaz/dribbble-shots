@@ -1,4 +1,5 @@
 import * as api from "./lib/dribbbleService";
+import { unique, map } from "./lib/util";
 import store from "./store";
 
 export function fetchShots(page) {
@@ -11,7 +12,7 @@ export function fetchShots(page) {
       store.setState({
         pagesFetched: [...pagesFetched, page],
         lastPage: shots.length % 24 !== 0,
-        shots: [...prevShots, ...shots],
+        shots: unique([...prevShots, ...shots], s => s.id),
         loadingShots: false,
         page
       });
@@ -30,7 +31,7 @@ export function fetchShot(id) {
     return Promise.resolve(shots);
   }
   return api.fetchShot(id).then(shot => {
-    store.setState({ shots: [shot, ...shots] });
+    store.setState({ shots: unique([...shots, shot], s => s.id) });
     return shot;
   });
 }
@@ -39,7 +40,9 @@ export function fetchComments(id) {
   const { shots } = store.getState();
   const [shot] = shots.filter(s => s.id == id);
   return api.fetchComments(id, shot.comments_count).then(comments => {
-    store.setState({ shots: shots.map(s => (s.id === id ? { ...shot, comments } : s)) });
+    store.setState({
+      shots: map(shots, s => (s.id === id ? { ...shot, comments } : s))
+    });
     return comments;
   });
 }

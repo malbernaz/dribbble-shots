@@ -1,5 +1,6 @@
 import "./style/main.scss";
 
+import { options } from "preact";
 import Router from "preact-router";
 
 import Provider from "./lib/ContextProvider";
@@ -10,6 +11,10 @@ import ShotRoute from "./routes/ShotRoute";
 import NotFound from "./routes/NotFound";
 
 import store from "./store";
+
+if (global.requestAnimationFrame) {
+  options.debounceRendering = requestAnimationFrame;
+}
 
 const App = () =>
   <Provider context={{ store }}>
